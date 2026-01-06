@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مستشفى الجامعة الأردنية</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+      background-size: 20px 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .phone-frame {
+      width: 302.81px;
+      height: 611.14px;
+      background: #d4e157;
+      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+      background-size: 20px 20px;
+      border-radius: 50px;
+      border: 15px solid #1a1a1a;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .notch {
+      width: 150px;
+      height: 30px;
+      background: #1a1a1a;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 0 0 20px 20px;
+      z-index: 100;
+    }
+
+    .screen-content {
+      width: 100%;
+      height: 100%;
+      padding: 50px 20px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      position: absolute;
+      top: 537px;
+      left: 0;
+      z-index: 10;
+    }
+
+    .info-btn {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 2px solid #1c586a;
+      background: transparent;
+      color: #1c586a;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    .info-btn:hover { background: rgba(28, 88, 106, 0.1); }
+
+    .back-btn {
+      background: #1c586a;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 10px rgba(28, 88, 106, 0.3);
+    }
+    .back-btn:hover {
+      background: #063f4c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(28, 88, 106, 0.4);
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 1;
+      width: 100%;
+      margin-top: 25px;
+    }
+
+    /* ✅ تركيب الروبوت */
+    .robot-wrap{
+      position: relative;
+      width: 300px;
+      height: 380px;
+      margin-top: -40px;
+      animation: float 3s ease-in-out infinite;
+    pointer-events: none;
+    }
+
+    @keyframes float{
+      0%, 100%{ transform: translateY(0); }
+      50%{ transform: translateY(-10px); }
+    }
+
+    /* الرأس */
+    .robot-head{
+      position: absolute;
+      top: -100px;
+      left: 55%;
+      transform: translateX(-50%);
+      width: 260px;
+      z-index: 3;
+    }
+
+    /* الذراعين */
+    .robot-arm{
+      position: absolute;
+      top: -110px;
+      width: 140px;
+      z-index: 2;
+    }
+
+    .robot-arm.left{
+     left: -46px;
+     top: -106px;
+     width: 250px;
+
+}
+
+    /* الذراع اليمين */
+    .robot-arm.right{
+      right: 3px;
+    }
+
+    /* العنوان */
+    .title {
+      margin-top: -228px;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #1a1a1a;
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* الأزرار */
+    .btns {
+      margin-top: 10px;
+    /*margin-top: 0px;*/
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      align-items: center;
+    }
+
+
+    .mode-btn {
+      width: 200px;
+      background: #1c586a;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 6px 18px rgba(28, 88, 106, 0.35);
+    }
+    .mode-btn:hover {
+      background: #063f4c;
+     /* transform: translateY(-2px);*/
+    }
+
+    .mode-btn.big {
+      font-size: 18px;
+      padding: 14px 20px;
+    }
+
+    @media (max-width: 480px) {
+      .phone-frame { border: 10px solid #1a1a1a; border-radius: 40px; }
+      .mode-btn { width: 190px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone-frame">
+ 
+
+    <div class="screen-content">
+      <div class="top-bar">
+        <button class="info-btn" onclick="showInfo()">ℹ</button>
+        <button class="back-btn" onclick="goBack()">رجوع</button>
+      </div>
+
+      <div class="main-content">
+
+        <div class="robot-wrap">
+          <img class="robot-arm left" src="left-arm.png" alt="left arm" />
+          <img class="robot-arm right" src="right-arm.png" alt="right arm" />
+          <img class="robot-head" src="head.png" alt="robot head" />
+        </div>
+
+        <div class="title">اختار الوضع اللي بدك إياه</div>
+
+        <div class="btns">
+          <button class="mode-btn big" onclick="chooseMode('senior')">وضع كبار السن</button>
+          <button class="mode-btn" onclick="chooseMode('normal')">الوضع العادي</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "second.html";
+    }
+
+    function showInfo() {
+      alert("معلومات: اختار وضع العرض المناسب إلك 😊");
+    }
+
+    function chooseMode(mode) {
+      const headImg = document.querySelector(".robot-head");
+
+      if (mode === "senior") {
+        // إذا عندك نسخة رأس ثانية كبار السن بدّلها هون (اختياري)
+        // headImg.src = "head-senior.png";
+        window.location.href = "chat_senior.html"; // عدّلها للصفحة اللي بدك
+      } else {
+        // headImg.src = "head-normal.png";
+        window.location.href = "chat_normal.html"; // عدّلها للصفحة اللي بدك
+      }
+    }
+  </script>
+</body>
+</html>
