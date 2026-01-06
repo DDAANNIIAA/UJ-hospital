@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المحادثة - مستشفى الجامعة الأردنية</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      background-image: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+      background-size: 20px 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .phone-frame {
+      width: 302.81px;
+      height: 611.14px;
+      background-image: url("bg3.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      border-radius: 50px;
+      border: 15px solid #1a1a1a;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .chat-header {
+      background: transparent;
+      padding: 20px 15px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 10;
+    }
+
+    .back-btn {
+      background: #1c586a;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 10px rgba(28, 88, 106, 0.3);
+    }
+    .back-btn:hover {
+      background: #063f4c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(28, 88, 106, 0.4);
+    }
+
+    /* ✅ خلي الكونتينر LTR عشان المحاذاة */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      direction: ltr;
+    }
+
+    .message-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      max-width: 92%;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .message-container.bot { align-self: flex-start; flex-direction: row; }
+    .message-container.user { align-self: flex-end; flex-direction: row-reverse; }
+
+    .robot-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #1c586a;
+      padding: 0;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(28, 88, 106, 0.3);
+    }
+
+    .message {
+      max-width: 100%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 12.5px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      direction: rtl;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message-container.bot .message {
+      background: white;
+      color: #1a1a1a;
+      border: 2px solid #1c586a;
+      box-shadow: 0 2px 8px rgba(28, 88, 106, 0.15);
+    }
+
+    .message-container.user .message {
+      background: #1c586a;
+      color: white;
+      box-shadow: 0 2px 8px rgba(28, 88, 106, 0.3);
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 15px 15px;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .quick-reply-btn {
+      background: white;
+      border: 2px solid #1c586a;
+      color: #1c586a;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(28, 88, 106, 0.15);
+    }
+
+    .quick-reply-btn:hover {
+      background: #1c586a;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(28, 88, 106, 0.3);
+    }
+
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      background: white;
+      border: 2px solid #1c586a;
+      padding: 12px 16px;
+      border-radius: 18px;
+      margin-left: 48px;
+      gap: 4px;
+      align-items: center;
+    }
+    .typing-indicator.active { display: flex; }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background: #1c586a;
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(5px); }
+    }
+
+    .chat-input-area {
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 2px solid #1c586a;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 2px solid #1c586a;
+      border-radius: 25px;
+      font-size: 12px;
+      background: white;
+      outline: none;
+    }
+
+    .send-btn {
+      width: 38px;
+      height: 38px;
+      background: #1c586a;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 10px rgba(28, 88, 106, 0.3);
+    }
+    .send-btn:hover { background: #063f4c; transform: scale(1.05); }
+
+    .quick-replies.hidden { display: none; }
+
+    /* ✅ شكل الرابط داخل الرسائل */
+    .message a{
+      color:#1c586a;
+      font-weight:700;
+      text-decoration: underline;
+      direction:ltr;
+      unicode-bidi: plaintext;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone-frame">
+    <div class="screen-content">
+
+      <div class="chat-header">
+        <button class="back-btn" onclick="goBack()">رجوع</button>
+      </div>
+
+      <div class="chat-messages" id="chatMessages"></div>
+
+      <div class="typing-indicator" id="typingIndicator">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+
+      <div class="quick-replies" id="quickReplies">
+        <button class="quick-reply-btn" onclick="sendQuickReply('كيف اعمل حساب')">كيف اعمل حساب</button>
+        <button class="quick-reply-btn" onclick="sendQuickReply('كيف احجز موعد')">كيف احجز موعد</button>
+        <button class="quick-reply-btn" onclick="sendQuickReply('اماكن الأقسام')">اماكن الأقسام</button>
+        <button class="quick-reply-btn" onclick="sendQuickReply('ارقام الاتصال بالمستشفى')">أرقام للاتصال بالمستشفى</button>
+      </div>
+
+      <div class="chat-input-area">
+        <input
+          type="text"
+          class="chat-input"
+          id="messageInput"
+          placeholder="اكتب رسالتك هنا..."
+          onkeypress="handleKeyPress(event)"
+          onfocus="hideQuickReplies()"
+        />
+        <button class="send-btn" onclick="sendMessage()">➤</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="dr-mamdooh.js"></script>
+  <script src="chat-ui.js"></script>
+</body>
+</html>
